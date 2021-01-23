@@ -1,17 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Welcome from './pages/welcome';
+import Login from './pages/login';
+import Signup from './pages/signup';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+function App() {
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Welcome/>
+          </Route>
+          <Route path="/login">
+            <Login/>
+          </Route>
+          <Route path="/signup">
+            <Signup/>
+          </Route>
+        </Switch>
+      </Router>
+      
+    </React.Fragment>
+    
+  );
+}
+
+ReactDOM.render(<App />, document.querySelector('#app'));
