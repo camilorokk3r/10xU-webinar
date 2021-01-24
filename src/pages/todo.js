@@ -42,6 +42,8 @@ const ToDo = () => {
     }, 
   ]);
 
+  const [open, setOpen] = useState(false);
+
   const markToDo = (item, completed) => {
     console.log('item:', item, 'completed:', completed);
   }
@@ -81,7 +83,7 @@ const ToDo = () => {
         
       >
         <BottomNavigationAction label="Profile" value="profile" icon={<Icon>person</Icon>} />
-        <Fab color="primary" aria-label="add">
+        <Fab color="primary" aria-label="add" onClick={()=>{setOpen(true)}}>
           <Icon>add</Icon>
         </Fab>
         
