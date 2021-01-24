@@ -43,30 +43,34 @@ const useStyles = makeStyles((theme) => ({
 const ToDo = () => {
   const styles  = useStyles()
   const [value, setValue] = useState()
-  const [todos, setTodos] = useState([
-    {
-      title: 'Todo 1',
-      completed: true,
-      id: 1
-    }, 
-    {
-      title: 'Todo 2',
-      completed: false,
-      id: 2
-    }, 
-    {
-      title: 'Todo 3',
-      completed: false,
-      id: 3
-    }, 
-  ]);
+  const [todos, setTodos] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [fabClass, setFabClass] = useState();
+  const [newTodo, setNewTodo] = useState({id:'',title:'', description: '', date: ''})
 
   const markToDo = (item, completed) => {
-    console.log('item:', item, 'completed:', completed);
+    const index = todos.findIndex(search => { 
+      return item.id === search.id
+    })
+    console.log(index);
+    if(index !== -1){
+      
+      todos[index].completed = completed;
+      console.log('todos:', todos);
+      setTodos([...todos]);
+    }
+    
+  }
+
+  const saveToDo = ()=> {
+    newTodo.id  = todos.length + 1;
+    console.log(newTodo);
+
+    setTodos([...todos,newTodo])
+    setNewTodo({title:'', description: '', date: ''})
+    handleClose()
   }
 
   const handleClick = (event) => {
@@ -128,7 +132,8 @@ const ToDo = () => {
               id="title"
               label="Add Title"
               name="title"
-              
+              value={newTodo.title}
+              onChange={(event)=>{ setNewTodo({...newTodo, title: event.target.value})}}
               autoFocus
             />
             <TextField
@@ -138,7 +143,9 @@ const ToDo = () => {
               fullWidth
               id="date"
               label="Add Date"
-              name="date"            
+              name="date"   
+              value={newTodo.date}      
+              onChange={(event)=>{ setNewTodo({...newTodo, date: event.target.value})}}   
               autoFocus
             />
             <TextField
@@ -148,7 +155,9 @@ const ToDo = () => {
               fullWidth
               id="description"
               label="Description"
-              name="description"            
+              name="description"  
+              value={newTodo.description} 
+              onChange={(event)=>{ setNewTodo({...newTodo, description: event.target.value})}}         
               autoFocus
             />
             <Box className={styles.buttonContainer}>
@@ -166,7 +175,7 @@ const ToDo = () => {
                 
                 variant="contained"
                 color="primary"
-                onClick={()=>{ }}          
+                onClick={()=>{ saveToDo() }}          
               >
                 Save
               </Button>
