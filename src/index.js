@@ -10,6 +10,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import ToDo from './pages/todo';
 
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
           </Route>
           <Route path="/signup">
             <Signup/>
+          </Route>
+        
+          <Route path="/todo">
+            <ToDo/>
           </Route>
         </Switch>
       </Router>
