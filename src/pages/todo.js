@@ -14,7 +14,6 @@ import {
   makeStyles, 
   Paper, 
   Popover, 
-  Popper, 
   TextField, 
   Typography 
 } from "@material-ui/core";
@@ -35,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1),
     }
+  },
+  rotated:{
+    transform: 'rotate(45deg)'
   }
 }))
 
@@ -61,6 +63,7 @@ const ToDo = () => {
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [fabClass, setFabClass] = useState();
 
   const markToDo = (item, completed) => {
     console.log('item:', item, 'completed:', completed);
@@ -69,10 +72,12 @@ const ToDo = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
     setOpen(true);
+    setFabClass(styles.rotated);
   }
   const handleClose = () => {
     setAnchorEl(null);
     setOpen(false);
+    setFabClass('');
   }
 
   return (
@@ -152,7 +157,7 @@ const ToDo = () => {
                 
                 variant="outlined"
                 color="primary"
-                onClick={()=>{ setOpen(false) }}          
+                onClick={handleClose}          
               >
                 Cancel
               </Button>
@@ -179,7 +184,7 @@ const ToDo = () => {
         
       >
         <BottomNavigationAction label="Profile" value="profile" icon={<Icon>person</Icon>} />
-        <Fab color="primary" aria-label="add" onClick={handleClick}>
+        <Fab color="primary" aria-label="add" onClick={handleClick} className={fabClass}>
           <Icon>add</Icon>
         </Fab>
         
