@@ -2,6 +2,7 @@ import {
   BottomNavigation, 
   BottomNavigationAction, 
   Box, 
+  Button, 
   Container, 
   Fab, 
   Icon, 
@@ -11,41 +12,67 @@ import {
   ListItemSecondaryAction, 
   ListItemText, 
   makeStyles, 
+  Paper, 
+  Popover, 
+  Popper, 
+  TextField, 
   Typography 
 } from "@material-ui/core";
 import { useState } from "react";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   list:{
     minHeight:'500px'
+  },
+  drawer:{
+    padding:'20px', 
+    maxWidth: '400px'
+    // position:'absolute'
+    
+  },
+  buttonContainer:{
+    textAlign: 'right',
+    '& > *': {
+      margin: theme.spacing(1),
+    }
   }
-})
+}))
 
 const ToDo = () => {
   const styles  = useStyles()
   const [value, setValue] = useState()
   const [todos, setTodos] = useState([
     {
-      todo:'Todo 1',
+      title: 'Todo 1',
       completed: true,
       id: 1
     }, 
     {
-      todo:'Todo 2',
+      title: 'Todo 2',
       completed: false,
       id: 2
     }, 
     {
-      todo:'Todo 3',
+      title: 'Todo 3',
       completed: false,
       id: 3
     }, 
   ]);
 
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const markToDo = (item, completed) => {
     console.log('item:', item, 'completed:', completed);
+  }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
   }
 
   return (
@@ -57,7 +84,7 @@ const ToDo = () => {
         <List>
           {todos.map(item=>(
             <ListItem key={item.id} divider="true">
-              <ListItemText>{item.todo}</ListItemText>
+              <ListItemText>{item.title}</ListItemText>
               <ListItemSecondaryAction>
                 {item.completed === true ?                 
                   <IconButton edge="end" aria-label="check" onClick={()=>{markToDo(item, false)}}>
@@ -73,7 +100,76 @@ const ToDo = () => {
           ))}
           
         </List>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+        >
+          <Paper className={styles.drawer}>
+            <Typography variant="h5">Add Item</Typography>
+            <TextField
+              variant="filled"
+              margin="normal"
+              required
+              fullWidth
+              id="title"
+              label="Add Title"
+              name="title"
+              
+              autoFocus
+            />
+            <TextField
+              variant="filled"
+              margin="normal"
+              required
+              fullWidth
+              id="date"
+              label="Add Date"
+              name="date"            
+              autoFocus
+            />
+            <TextField
+              variant="filled"
+              margin="normal"
+              required
+              fullWidth
+              id="description"
+              label="Description"
+              name="description"            
+              autoFocus
+            />
+            <Box className={styles.buttonContainer}>
+              <Button
+                type="button"
+                
+                variant="outlined"
+                color="primary"
+                onClick={()=>{ setOpen(false) }}          
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                
+                variant="contained"
+                color="primary"
+                onClick={()=>{ }}          
+              >
+                Save
+              </Button>
+            </Box>
+          </Paper>
+        </Popover>
       </Box>
+      
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
@@ -83,7 +179,7 @@ const ToDo = () => {
         
       >
         <BottomNavigationAction label="Profile" value="profile" icon={<Icon>person</Icon>} />
-        <Fab color="primary" aria-label="add" onClick={()=>{setOpen(true)}}>
+        <Fab color="primary" aria-label="add" onClick={handleClick}>
           <Icon>add</Icon>
         </Fab>
         
