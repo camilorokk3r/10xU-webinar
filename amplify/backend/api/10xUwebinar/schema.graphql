@@ -1,0 +1,6 @@
+type ToDo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  date: AWSDate
+  description: String
+}

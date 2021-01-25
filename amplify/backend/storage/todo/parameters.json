@@ -1,0 +1,7 @@
+{
+    "tableName": "todo",
+    "partitionKeyName": "title",
+    "partitionKeyType": "S",
+    "sortKeyName": "date",
+    "sortKeyType": "S"
+}

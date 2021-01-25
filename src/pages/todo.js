@@ -17,7 +17,9 @@ import {
   TextField, 
   Typography 
 } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Auth } from 'aws-amplify';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   list:{
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ToDo = () => {
+  const history = useHistory();
   const styles  = useStyles()
   const [value, setValue] = useState()
   const [todos, setTodos] = useState([]);
@@ -48,7 +51,22 @@ const ToDo = () => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [fabClass, setFabClass] = useState();
-  const [newTodo, setNewTodo] = useState({id:'',title:'', description: '', date: ''})
+  const [newTodo, setNewTodo] = useState({id:'',title:'', description: '', date: ''});
+
+  const getUser = async () => {
+    const user = await Auth.currentUserInfo()
+    console.log('user:', user)
+    if(user){
+      history.replace('/todo')
+    }else{
+      history.replace('/')
+    }
+  }
+
+  useEffect(() => {    
+    getUser()
+  });
+
 
   const markToDo = (item, completed) => {
     const index = todos.findIndex(search => { 
