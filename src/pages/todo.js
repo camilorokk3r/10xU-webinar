@@ -17,7 +17,9 @@ import {
   TextField, 
   Typography 
 } from "@material-ui/core";
+import { FirebaseAuthConsumer } from "@react-firebase/auth";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   list:{
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ToDo = () => {
+  const history = useHistory()
   const styles  = useStyles()
   const [value, setValue] = useState()
   const [todos, setTodos] = useState([]);
@@ -199,6 +202,16 @@ const ToDo = () => {
         
         <BottomNavigationAction label="Settings" value="settings" icon={<Icon>settings</Icon>}  />
       </BottomNavigation>
+      <FirebaseAuthConsumer>
+        {({ isSignedIn, user, providerId }) => {
+          
+          if (!isSignedIn || !user){
+            console.log(user, history)
+            history.replace('/')
+          }
+          
+        }}
+      </FirebaseAuthConsumer>
     </Container>
   );
 }

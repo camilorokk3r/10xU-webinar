@@ -5,15 +5,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  useHistory
+  Route
 } from "react-router-dom";
 
 import firebase from "firebase/app";
 import "firebase/auth";
 import { 
-  FirebaseAuthProvider,
-  FirebaseAuthConsumer 
+  FirebaseAuthProvider
 } from '@react-firebase/auth';
 
 
@@ -28,7 +26,7 @@ import ToDo from './pages/todo';
 
 function App() {
   
-  const history = useHistory();
+  
 
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
