@@ -6,6 +6,7 @@ frontend:
         - yarn install
     build:
       commands:
+        - echo $EXPORTS_FILE > ./src/aws-exports.js
         - yarn run build
   artifacts:
     baseDirectory: build
