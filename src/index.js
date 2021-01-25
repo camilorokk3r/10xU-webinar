@@ -10,10 +10,11 @@ import {
 
 import firebase from "firebase/app";
 import "firebase/auth";
+import 'firebase/firestore';
 import { 
   FirebaseAuthProvider
 } from '@react-firebase/auth';
-
+import { FirestoreProvider } from "@react-firebase/firestore";
 
 import { config } from "./config/config";
 
@@ -30,30 +31,31 @@ function App() {
 
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
-      <React.Fragment>
-        <CssBaseline />
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Welcome/>
-            </Route>
-            <Route path="/login">
-              <Login/>
-            </Route>
-            <Route path="/signup">
-              <Signup/>
-            </Route>
-          
-            <Route path="/todo">
-              <ToDo/>
-            </Route>
-
+      <FirestoreProvider {...config} firebase={firebase}>
+        <React.Fragment>
+          <CssBaseline />
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <Welcome/>
+              </Route>
+              <Route path="/login">
+                <Login/>
+              </Route>
+              <Route path="/signup">
+                <Signup/>
+              </Route>
             
-          </Switch>
-        </Router>
-        
-      </React.Fragment>
-      
+              <Route path="/todo">
+                <ToDo/>
+              </Route>
+
+              
+            </Switch>
+          </Router>
+          
+        </React.Fragment>
+      </FirestoreProvider>
     </FirebaseAuthProvider>
   );
 }

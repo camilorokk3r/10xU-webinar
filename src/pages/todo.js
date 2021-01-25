@@ -14,12 +14,16 @@ import {
   makeStyles, 
   Paper, 
   Popover, 
+  Snackbar, 
   TextField, 
   Typography 
 } from "@material-ui/core";
+import firebase from "firebase/app";
+import 'firebase/firestore';
 import { FirebaseAuthConsumer } from "@react-firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   list:{
@@ -52,6 +56,7 @@ const ToDo = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [fabClass, setFabClass] = useState();
   const [newTodo, setNewTodo] = useState({id:'',title:'', description: '', date: ''})
+  const [message, setMessage] = useState({open:false, message: '', type:'success'});
 
   const markToDo = (item, completed) => {
     const index = todos.findIndex(search => { 
@@ -67,13 +72,45 @@ const ToDo = () => {
     
   }
 
-  const saveToDo = ()=> {
-    newTodo.id  = todos.length + 1;
-    console.log(newTodo);
+  const saveToDo = async ()=> {
+    try {
+      const user  = firebase.auth().currentUser;
+      newTodo.user = user.uid;
+      console.log(newTodo);
 
-    setTodos([...todos,newTodo])
-    setNewTodo({title:'', description: '', date: ''})
-    handleClose()
+      const todoDB = firebase.firestore().collection('todo');
+      
+      const docRef = await todoDB.add(newTodo)
+      newTodo.id  = docRef.id;
+      
+      setNewTodo({title:'', description: '', date: ''})
+      handleClose()  
+      setMessage({message:'ToDo created successfully', type:'success', open:true})
+      getToDos()
+    } catch (error) {
+      setMessage({message:error.message, type:'error', open:true})
+    }
+    
+  }
+
+  const getToDos = async () => {
+    try {
+      const user  = firebase.auth().currentUser;
+      const todoDB = firebase.firestore().collection('todo');
+      const querySnapshot = await todoDB.where("user", "==", user.uid).get()
+      let todosFromDB = querySnapshot.docs.map(doc => {
+        console.log(doc.id, doc.data())
+        return {
+          ...doc.data(),
+          id: doc.id
+        }
+      })
+      console.log('todosFromDB:', todosFromDB);
+      setTodos([...todosFromDB])  
+    } catch (error) {
+      setMessage({message:error.message, type:'error', open:true})
+    }
+    
   }
 
   const handleClick = (event) => {
@@ -87,11 +124,20 @@ const ToDo = () => {
     setFabClass('');
   }
 
+  useEffect(() => {
+    getToDos()
+  },[]);
+
   return (
     <Container component="main" maxWidth="xs">
       <Typography variant="h3">
         Today
       </Typography>
+      <Snackbar open={message.open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={message.type}>
+          {message.message}
+        </Alert>
+      </Snackbar>
       <Box className={styles.list}>
         <List>
           {todos.map(item=>(
