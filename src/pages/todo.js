@@ -124,6 +124,14 @@ const ToDo = () => {
     setFabClass('');
   }
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setMessage({ open:false})
+  };
+
   useEffect(() => {
     getToDos()
   },[]);
@@ -133,8 +141,8 @@ const ToDo = () => {
       <Typography variant="h3">
         Today
       </Typography>
-      <Snackbar open={message.open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={message.type}>
+      <Snackbar open={message.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={message.type}>
           {message.message}
         </Alert>
       </Snackbar>
