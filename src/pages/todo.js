@@ -93,11 +93,6 @@ const ToDo = () => {
     })
     console.log(index);
     if(index !== -1){
-      
-      // todos[index].completed = completed;
-      // console.log('todos:', todos);
-      // setTodos([...todos]);
-
       const todoDB = firebase.firestore().collection('todo');
       await todoDB.doc(todos[index].id).set({ completed }, { merge: true })
       getToDos()
