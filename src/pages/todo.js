@@ -1,4 +1,5 @@
 import { 
+  Avatar,
   BottomNavigation, 
   BottomNavigationAction, 
   Box, 
@@ -7,8 +8,10 @@ import {
   Fab, 
   Icon, 
   IconButton, 
+  Input, 
   List, 
   ListItem, 
+  ListItemAvatar, 
   ListItemSecondaryAction, 
   ListItemText, 
   makeStyles, 
@@ -19,6 +22,7 @@ import {
   Typography 
 } from "@material-ui/core";
 import firebase from "firebase/app";
+import "firebase/storage"
 import 'firebase/firestore';
 import { FirebaseAuthConsumer } from "@react-firebase/auth";
 import { useEffect, useState } from "react";
@@ -43,6 +47,14 @@ const useStyles = makeStyles((theme) => ({
   },
   rotated:{
     transform: 'rotate(45deg)'
+  },
+  file:{
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    left: 0,
+    top: 0,
+    opacity:0
   }
 }))
 
@@ -132,6 +144,28 @@ const ToDo = () => {
     setMessage({ open:false})
   };
 
+  const uploadImage = async (event) => {
+    try{
+      console.log('event:', event, event.target, event.target.files);
+      const files = event.target.files || [];
+      const file = files[0]
+      console.log('The file:', file);
+      const ref = firebase.storage().ref().child(file.name)
+      const snapshot = await ref.put(file)
+      console.log(snapshot);
+      const imageURL = await snapshot.ref.getDownloadURL()
+      newTodo.image = imageURL;
+    }catch(error){
+      console.error(error);
+      setMessage({message: error.message, open:true, type: 'error'});
+    }
+    
+  }
+
+  const showImage = async(item) => {
+    console.log('item.image:', item.image)
+  }
+
   useEffect(() => {
     getToDos()
   },[]);
@@ -149,8 +183,14 @@ const ToDo = () => {
       <Box className={styles.list}>
         <List>
           {todos.map(item=>(
-            <ListItem key={item.id} divider="true">
-              <ListItemText>{item.title}</ListItemText>
+            <ListItem key={item.id} divider="true" onClick={()=>{showImage(item)}}>
+              <ListItemAvatar>
+                <Avatar src={item.image}>
+                  N/A        
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={item.title} secondary={item.description}></ListItemText>
+              
               <ListItemSecondaryAction>
                 {item.completed === true ?                 
                   <IconButton edge="end" aria-label="check" onClick={()=>{markToDo(item, false)}}>
@@ -201,6 +241,8 @@ const ToDo = () => {
               id="date"
               label="Add Date"
               name="date"   
+              type="date"
+              defaultValue={Date.now}
               value={newTodo.date}      
               onChange={(event)=>{ setNewTodo({...newTodo, date: event.target.value})}}   
               autoFocus
@@ -217,6 +259,17 @@ const ToDo = () => {
               onChange={(event)=>{ setNewTodo({...newTodo, description: event.target.value})}}         
               autoFocus
             />
+            <Button
+              type="button"                
+              variant="outlined"
+              color="primary"
+            >
+              Add Image
+              <Input type="file" accept="image/*" className={styles.file} onChange={uploadImage}></Input>
+              <Input type="hidden" value={newTodo.image} onChange={(event)=>{ setNewTodo({...newTodo, image: event.target.value})}}></Input>
+            </Button>
+            
+            
             <Box className={styles.buttonContainer}>
               <Button
                 type="button"
