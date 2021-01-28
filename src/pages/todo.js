@@ -33,7 +33,7 @@ import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   list:{
-    minHeight:'500px'
+    minHeight:'500px',
   },
   drawer:{
     padding:'20px', 
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     zIndex: 1,
     width:'400px',
-    height:'600px',
+    height:'700px',
     display: 'flex',
     alignItems: 'center'
   },
