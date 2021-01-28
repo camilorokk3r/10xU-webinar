@@ -4,6 +4,7 @@ import {
   BottomNavigationAction, 
   Box, 
   Button, 
+  CircularProgress, 
   Container, 
   Fab, 
   Icon, 
@@ -17,6 +18,7 @@ import {
   makeStyles, 
   Paper, 
   Popover, 
+  Slide, 
   Snackbar, 
   TextField, 
   Typography 
@@ -55,6 +57,19 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     top: 0,
     opacity:0
+  },
+  modalContainer:{
+    position: 'absolute',
+    zIndex: 1,
+    width:'400px',
+    height:'600px',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  fabClose:{
+    position:'absolute',
+    bottom:'5%',
+    left:'44%'
   }
 }))
 
@@ -69,6 +84,8 @@ const ToDo = () => {
   const [fabClass, setFabClass] = useState();
   const [newTodo, setNewTodo] = useState({id:'',title:'', description: '', date: ''})
   const [message, setMessage] = useState({open:false, message: '', type:'success'});
+  const [modal, setModal] = useState({image:null, checked: false});
+  const [uploading, setUploading] = useState(false);
 
   const markToDo = (item, completed) => {
     const index = todos.findIndex(search => { 
@@ -151,19 +168,25 @@ const ToDo = () => {
       const file = files[0]
       console.log('The file:', file);
       const ref = firebase.storage().ref().child(file.name)
+      setUploading(true);
       const snapshot = await ref.put(file)
       console.log(snapshot);
       const imageURL = await snapshot.ref.getDownloadURL()
       newTodo.image = imageURL;
+      setUploading(false);
     }catch(error){
       console.error(error);
       setMessage({message: error.message, open:true, type: 'error'});
+      setUploading(false);
     }
     
   }
 
   const showImage = async(item) => {
     console.log('item.image:', item.image)
+    if(item.image){
+      setModal({image: item.image, checked: true});
+    }
   }
 
   useEffect(() => {
@@ -181,6 +204,16 @@ const ToDo = () => {
         </Alert>
       </Snackbar>
       <Box className={styles.list}>
+        <Slide direction="up" in={modal.checked} mountOnEnter unmountOnExit>
+          <Paper elevation={4} className={styles.modalContainer}>
+            <div style={{width:'400px',height:'400px',backgroundSize:'cover', backgroundImage: `url(${modal.image})`, flex:'1'}}>
+              &nbsp;
+            </div>
+            <Fab color="primary" aria-label="add" onClick={()=>{setModal({checked:false})}} className={styles.fabClose}>
+              <Icon>close</Icon>
+            </Fab>
+          </Paper>
+        </Slide>
         <List>
           {todos.map(item=>(
             <ListItem key={item.id} divider="true" onClick={()=>{showImage(item)}}>
@@ -268,7 +301,7 @@ const ToDo = () => {
               <Input type="file" accept="image/*" className={styles.file} onChange={uploadImage}></Input>
               <Input type="hidden" value={newTodo.image} onChange={(event)=>{ setNewTodo({...newTodo, image: event.target.value})}}></Input>
             </Button>
-            
+            {uploading? <CircularProgress  /> : null}
             
             <Box className={styles.buttonContainer}>
               <Button
