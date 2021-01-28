@@ -87,16 +87,20 @@ const ToDo = () => {
   const [modal, setModal] = useState({image:null, checked: false});
   const [uploading, setUploading] = useState(false);
 
-  const markToDo = (item, completed) => {
+  const markToDo = async (item, completed) => {
     const index = todos.findIndex(search => { 
       return item.id === search.id
     })
     console.log(index);
     if(index !== -1){
       
-      todos[index].completed = completed;
-      console.log('todos:', todos);
-      setTodos([...todos]);
+      // todos[index].completed = completed;
+      // console.log('todos:', todos);
+      // setTodos([...todos]);
+
+      const todoDB = firebase.firestore().collection('todo');
+      await todoDB.doc(todos[index].id).set({ completed }, { merge: true })
+      getToDos()
     }
     
   }
