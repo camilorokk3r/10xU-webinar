@@ -35,6 +35,8 @@ El repositorio consta de las siguientes ramas, que muestran el proceso de creaci
 
 * step-2: Muestra la creacion de la páginas de ToDo con los elementos gráficos básicos (Lista con datos dummy y navegación inferior). Se incluye acceso bajo la ruta /todo
 
+* step-3: Muestra la adición de un componente "Popover" para la adición de ToDos.
+
 ## Más Información
 
 Puedes aprender mas sobre el generador de aplicaciónes en el siguiente enlace [Documentación Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
