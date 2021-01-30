@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Box, Link, Typography } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useHistory } from 'react-router-dom';
+import { FirebaseAuthConsumer } from '@react-firebase/auth';
 
 const Welcome  = ()=> {
   const history = useHistory();
@@ -30,6 +31,18 @@ const Welcome  = ()=> {
           Don't have an account? <Link variant="body2" href="/signup">Register Here</Link>
         </Box>
       </Box>
+
+      <FirebaseAuthConsumer>
+        {({ isSignedIn, user, providerId }) => {
+          
+          if (isSignedIn && user){
+            console.log(user, history)
+            history.replace('/todo')
+          }
+          
+        }}
+      </FirebaseAuthConsumer>
+
     </Container>
   )
 }
