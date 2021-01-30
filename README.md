@@ -1,6 +1,6 @@
 # Webinar 10xU
 
-Este proyecto fue creado con [Create React App](https://github.com/facebook/create-react-app). Se basa en el siguiente prototipo: 
+Este proyecto fue creado con [Create React App](https://github.com/facebook/create-react-app). Se basa en el [siguiente prototipo](https://ke859m.axshare.com/#id=i9q7q3&p=log_in___register_1) 
 
 ## Requerimientos
 
