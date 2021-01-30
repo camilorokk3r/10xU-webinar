@@ -41,6 +41,8 @@ El repositorio consta de las siguientes ramas, que muestran el proceso de creaci
 
 * step-5: Muestra la adición del SDK (Software Developmen Kit) de [Firebase](https://firebase.google.com/). Muestra como integrar la autenticación de email y password de firebase en la página de login y el registro con email y password en la página de signup. Este branch además adiciona un componente contenedor para verificar si el usuario esta logueado y redireccionarlo automáticamente a la página de ToDos (/todo)
 
+* step-6: Muestra la adición de [Firebase Firestore](https://firebase.google.com/products/firestore) una de las bases de datos de Firebase para persistir los ToDos. Esta vez al refrescar la pantalla, los ToDos vuelven a aparecer. Todavía marcar un ToDo como completado no se está persistiendo.
+
 ## Más Información
 
 Puedes aprender mas sobre el generador de aplicaciónes en el siguiente enlace [Documentación Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
