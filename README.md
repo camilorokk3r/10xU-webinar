@@ -33,9 +33,10 @@ El repositorio consta de las siguientes ramas, que muestran el proceso de creaci
 
 * step-1: Muestra la creacion de las páginas básicas de Login, Signup y Welcome con todos los elementos gráficos y un router para poder acceder a cada una de ellas por medio de una url específica (/login, /signup y / respectivamente)
 
+* step-2: Muestra la creacion de la páginas de ToDo con los elementos gráficos básicos (Lista con datos dummy y navegación inferior). Se incluye acceso bajo la ruta /todo
+
 ## Más Información
 
 Puedes aprender mas sobre el generador de aplicaciónes en el siguiente enlace [Documentación Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
 
 Para aprender sobre react usa el siguiente enlace [Documentación React](https://reactjs.org/).
-
