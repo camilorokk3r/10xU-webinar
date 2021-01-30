@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Webinar 10xU
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto fue creado con [Create React App](https://github.com/facebook/create-react-app). Se basa en el siguiente prototipo: 
 
-## Available Scripts
+## Requerimientos
 
-In the project directory, you can run:
+Para correr este proyecto de manera local necesitas:
 
-### `yarn start`
+* Node 10+
+* Yarn
+  
+## Para iniciar
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para instalar las dependencias, en la raiz del directorio corre el siguiente comando:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+yarn
+```
 
-### `yarn test`
+Para iniciar el servidor local, en la raiz del directorio corre el siguiente comando:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+yarn start
+```
 
-### `yarn build`
+Para ver el proyecto funcionando, abre el navegador en la siguiente dirección [http://localhost:3000](http://localhost:3000) .
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+La página se refresca automaticamente si hace edición en el codigo.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Ramas del repositorio
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+El repositorio consta de las siguientes ramas, que muestran el proceso de creación por etapas de la aplicación completa:
 
-### `yarn eject`
+* step-1: Muestra la creacion de las páginas básicas de Login, Signup y Welcome con todos los elementos gráficos y un router para poder acceder a cada una de ellas por medio de una url específica (/login, /signup y / respectivamente)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* step-2: Muestra la creacion de la páginas de ToDo con los elementos gráficos básicos (Lista con datos dummy y navegación inferior). Se incluye acceso bajo la ruta /todo
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* step-3: Muestra la adición de un componente "Popover" para la adición de ToDos.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* step-4: Muestra la adición dinámica de ToDos pero todavia sin persistencia (al refrescar la página los ToDos se desaparecen).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Más Información
 
-## Learn More
+Puedes aprender mas sobre el generador de aplicaciónes en el siguiente enlace [Documentación Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Para aprender sobre react usa el siguiente enlace [Documentación React](https://reactjs.org/).
